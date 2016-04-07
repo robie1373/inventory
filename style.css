@@ -98,6 +98,15 @@ button.add:hover {
   opacity: 0.75;
 }
 
+button.ok {
+  opacity 0.75;
+  background-color: green;
+}
+button.err {
+  opacity 0.75;
+  background-color: red;
+}
+
 button.add[disabled],
 button.add[disabled]:hover {
   opacity: 0.25;

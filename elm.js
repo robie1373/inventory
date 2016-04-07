@@ -10420,7 +10420,11 @@ Elm.Inventory.make = function (_elm) {
                       ,A2($InventoryUtils.onInput,address,UpdateFormCount)]),
               _U.list([]))]))
               ,A2($Html.button,
-              _U.list([$Html$Attributes.$class("addItem"),A2($Html$Events.onClick,address,AddItem),$Html$Attributes.disabled(isAddInvalid(model))]),
+              _U.list([$Html$Attributes.classList(_U.list([{ctor: "_Tuple2",_0: "addItem",_1: true}
+                                                          ,{ctor: "_Tuple2",_0: "err",_1: isAddInvalid(model)}
+                                                          ,{ctor: "_Tuple2",_0: "ok",_1: $Basics.not(isAddInvalid(model))}]))
+                      ,A2($Html$Events.onClick,address,AddItem)
+                      ,$Html$Attributes.disabled(isAddInvalid(model))]),
               _U.list([isAddInvalid(model) ? $Html.text("complete form") : $Html.text("Add Item")]))]));
    });
    var view = F2(function (address,model) {

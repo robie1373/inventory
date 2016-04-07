@@ -142,7 +142,11 @@ newComponentForm address model =
           [  ]
       ],
       -- Submit button
-      button [ class "addItem",
+      button [ classList [ 
+              ("addItem", True),
+              ("err", (isAddInvalid model)),
+              ("ok", (not (isAddInvalid model)))
+            ],
             onClick address AddItem,
             disabled (isAddInvalid model)
           ]
