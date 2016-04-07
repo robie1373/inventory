@@ -64,7 +64,12 @@ update action model =
     AddItem ->
       if isAddInvalid model then model
       else
-        { model | stock = List.append model.stock [ 
+        { model | 
+          descriptionInput = "",
+          packageInput = "",
+          countInput = "",
+          nextID = model.nextID + 1,
+          stock = List.append model.stock [ 
             newStockItem model.descriptionInput 
             model.packageInput
             model.countInput
@@ -141,26 +146,42 @@ newComponentForm address model =
             onClick address AddItem,
             disabled (isAddInvalid model)
           ]
-          [ text "Add Item" ]
+          [ if isAddInvalid model 
+            then text "complete form"
+            else
+              text "Add Item" 
+          ]
     ]
 
 stockItem : StockItem -> Html
 stockItem item =
-    li [  ]
-        [ span [ class "description" ]
+    tr [  ]
+        [ td [ class "id" ]
+          [ text (toString item.id) ],
+          td [ class "description" ]
           [ text item.description ],
-          span [ class "package" ]
+          td [ class "package" ]
           [ text item.package ],
-          span [ class "count" ]
+          td [ class "count" ]
           [ text item.count ]
         ]
+
+stockHeaders : Html
+stockHeaders = 
+  thead [  ] [
+    th [  ] [ text "ID" ],
+    th [  ] [ text "Description" ],
+    th [  ] [ text "Package" ],
+    th [  ] [ text "Count" ]
+  ]
 
 stockTable : List StockItem -> Html
 stockTable stock =
   let
     stockItems = List.map stockItem stock 
   in
-    ul [ ]  stockItems
+    table [] (stockHeaders :: stockItems)
+    
 
 view : Address Action -> Model -> Html
 view address model =

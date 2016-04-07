@@ -10360,14 +10360,24 @@ Elm.Inventory.make = function (_elm) {
    $StartApp$Simple = Elm.StartApp.Simple.make(_elm),
    $String = Elm.String.make(_elm);
    var _op = {};
+   var stockHeaders = A2($Html.thead,
+   _U.list([]),
+   _U.list([A2($Html.th,_U.list([]),_U.list([$Html.text("ID")]))
+           ,A2($Html.th,_U.list([]),_U.list([$Html.text("Description")]))
+           ,A2($Html.th,_U.list([]),_U.list([$Html.text("Package")]))
+           ,A2($Html.th,_U.list([]),_U.list([$Html.text("Count")]))]));
    var stockItem = function (item) {
-      return A2($Html.li,
+      return A2($Html.tr,
       _U.list([]),
-      _U.list([A2($Html.span,_U.list([$Html$Attributes.$class("description")]),_U.list([$Html.text(item.description)]))
-              ,A2($Html.span,_U.list([$Html$Attributes.$class("package")]),_U.list([$Html.text(item.$package)]))
-              ,A2($Html.span,_U.list([$Html$Attributes.$class("count")]),_U.list([$Html.text(item.count)]))]));
+      _U.list([A2($Html.td,_U.list([$Html$Attributes.$class("id")]),_U.list([$Html.text($Basics.toString(item.id))]))
+              ,A2($Html.td,_U.list([$Html$Attributes.$class("description")]),_U.list([$Html.text(item.description)]))
+              ,A2($Html.td,_U.list([$Html$Attributes.$class("package")]),_U.list([$Html.text(item.$package)]))
+              ,A2($Html.td,_U.list([$Html$Attributes.$class("count")]),_U.list([$Html.text(item.count)]))]));
    };
-   var stockTable = function (stock) {    var stockItems = A2($List.map,stockItem,stock);return A2($Html.ul,_U.list([]),stockItems);};
+   var stockTable = function (stock) {
+      var stockItems = A2($List.map,stockItem,stock);
+      return A2($Html.table,_U.list([]),A2($List._op["::"],stockHeaders,stockItems));
+   };
    var header = A2($Html.div,
    _U.list([]),
    _U.list([A2($Html.h1,_U.list([]),_U.list([$Html.text("SirKits Inventory")])),A2($Html.h2,_U.list([]),_U.list([$Html.text("is awesome!")]))]));
@@ -10411,7 +10421,7 @@ Elm.Inventory.make = function (_elm) {
               _U.list([]))]))
               ,A2($Html.button,
               _U.list([$Html$Attributes.$class("addItem"),A2($Html$Events.onClick,address,AddItem),$Html$Attributes.disabled(isAddInvalid(model))]),
-              _U.list([$Html.text("Add Item")]))]));
+              _U.list([isAddInvalid(model) ? $Html.text("complete form") : $Html.text("Add Item")]))]));
    });
    var view = F2(function (address,model) {
       return A2($Html.div,_U.list([$Html$Attributes.id("container")]),_U.list([header,A2(newComponentForm,address,model),stockTable(model.stock)]));
@@ -10429,7 +10439,11 @@ Elm.Inventory.make = function (_elm) {
       switch (_p0.ctor)
       {case "NoOp": return model;
          case "AddItem": return isAddInvalid(model) ? model : _U.update(model,
-           {stock: A2($List.append,model.stock,_U.list([A4(newStockItem,model.descriptionInput,model.packageInput,model.countInput,model.nextID)]))});
+           {descriptionInput: ""
+           ,packageInput: ""
+           ,countInput: ""
+           ,nextID: model.nextID + 1
+           ,stock: A2($List.append,model.stock,_U.list([A4(newStockItem,model.descriptionInput,model.packageInput,model.countInput,model.nextID)]))});
          case "UpdateFormDescription": return _U.update(model,{descriptionInput: _p0._0});
          case "UpdateFormPackage": return _U.update(model,{packageInput: _p0._0});
          default: return _U.update(model,{countInput: _p0._0});}
@@ -10450,6 +10464,7 @@ Elm.Inventory.make = function (_elm) {
                                   ,header: header
                                   ,newComponentForm: newComponentForm
                                   ,stockItem: stockItem
+                                  ,stockHeaders: stockHeaders
                                   ,stockTable: stockTable
                                   ,view: view
                                   ,main: main};

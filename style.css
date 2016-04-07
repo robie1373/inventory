@@ -161,7 +161,26 @@ ul {
   text-align: left;
 }
 
+table {
+  margin: 20px 10px;
+  padding: 0;
+  list-style: none;
+  font-size: 1.5em;
+  font-weight: bold;
+  text-align: left;
+}
+
 li {
+  background: #61a1bc;
+  background: #fff;
+  height: 25px;
+  position: relative;
+  padding: 15px 30px;
+  margin-bottom: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+
+thead, th, tr, td {
   background: #61a1bc;
   background: #fff;
   height: 25px;
