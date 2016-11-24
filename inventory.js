@@ -10392,6 +10392,8 @@ Elm.Inventory.make = function (_elm) {
    var newComponentForm = F2(function (address,model) {
       return A2($Html.div,
       _U.list([$Html$Attributes.id("new-component-form")]),
+      _U.list([A2($Html.form,
+      _U.list([]),
       _U.list([A2($Html.span,
               _U.list([]),
               _U.list([A2($Html.input,
@@ -10425,7 +10427,7 @@ Elm.Inventory.make = function (_elm) {
                                                           ,{ctor: "_Tuple2",_0: "ok",_1: $Basics.not(isAddInvalid(model))}]))
                       ,A2($Html$Events.onClick,address,AddItem)
                       ,$Html$Attributes.disabled(isAddInvalid(model))]),
-              _U.list([isAddInvalid(model) ? $Html.text("complete form") : $Html.text("Add Item")]))]));
+              _U.list([isAddInvalid(model) ? $Html.text("complete form") : $Html.text("Add Item")]))]))]));
    });
    var view = F2(function (address,model) {
       return A2($Html.div,_U.list([$Html$Attributes.id("container")]),_U.list([header,A2(newComponentForm,address,model),stockTable(model.stock)]));

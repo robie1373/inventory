@@ -19,7 +19,6 @@ onInput : Address a -> (String -> a) -> Attribute
 onInput address f =
   on "input" targetValue (\v -> Signal.message address (f v))
 
-
 parseInt : String -> Int
 parseInt string =
   case String.toInt string of

@@ -100,11 +100,12 @@ button.add:hover {
 
 button.ok {
   opacity 0.75;
-  background-color: green;
+  background-color: rgba(0, 255, 0, 0.3);
 }
+
 button.err {
   opacity 0.75;
-  background-color: red;
+  background-color: rgba(255, 0, 0, 0.3);
 }
 
 button.add[disabled],

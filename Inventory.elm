@@ -87,6 +87,17 @@ update action model =
       { model | countInput = contents }
 
 -- View
+{-isEnter v =
+
+  \v -> 
+      if v == 13 
+      then Signal.message address f 
+      else Signal.message address NoOp
+
+onEnter : Address a -> (String -> a) -> Attribute
+onEnter address f = 
+  on "enter" targetValue ( isEnter  )
+-}
 header : Html
 header =
   div [  ]
@@ -111,50 +122,52 @@ newComponentForm address model =
         ]  
       ] 
     ], -}
-    -- Description form field
-    span [] [ 
-        input [ type' "text",
-          placeholder "Description",
-          name "description",
-          value model.descriptionInput,
-          Utils.onInput address UpdateFormDescription 
+    Html.form [  ] [
+      -- Description form field
+      span [] [ 
+          input [ type' "text",
+            placeholder "Description",
+            name "description",
+            value model.descriptionInput,
+            Utils.onInput address UpdateFormDescription 
+            ] 
+            [ ]
+        ],
+        -- Package form field
+        span [] [
+          input [ type' "text",
+            placeholder "Package",
+            name "package",
+            value model.packageInput,
+            Utils.onInput address UpdateFormPackage 
+            ] 
+            [ ]
+        ],
+        -- Count form field
+        span [] [
+          input [ type' "number",
+            placeholder "Count",
+            value model.countInput,
+            name "count",
+            Utils.onInput address UpdateFormCount 
           ] 
-          [ ]
-      ],
-      -- Package form field
-      span [] [
-        input [ type' "text",
-          placeholder "Package",
-          name "package",
-          value model.packageInput,
-          Utils.onInput address UpdateFormPackage 
-          ] 
-          [ ]
-      ],
-      -- Count form field
-      span [] [
-        input [ type' "number",
-          placeholder "Count",
-          value model.countInput,
-          name "count",
-          Utils.onInput address UpdateFormCount 
-        ] 
-          [  ]
-      ],
-      -- Submit button
-      button [ classList [ 
-              ("addItem", True),
-              ("err", (isAddInvalid model)),
-              ("ok", (not (isAddInvalid model)))
-            ],
-            onClick address AddItem,
-            disabled (isAddInvalid model)
-          ]
-          [ if isAddInvalid model 
-            then text "complete form"
-            else
-              text "Add Item" 
-          ]
+            [  ]
+        ],
+        -- Submit button
+        button [ classList [ 
+                ("addItem", True),
+                ("err", (isAddInvalid model)),
+                ("ok", (not (isAddInvalid model)))
+              ],
+              onClick address AddItem,
+              disabled (isAddInvalid model)
+            ]
+            [ if isAddInvalid model 
+              then text "complete form"
+              else
+                text "Add Item" 
+            ]
+      ]
     ]
 
 stockItem : StockItem -> Html
